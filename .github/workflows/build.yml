@@ -19,22 +19,21 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Find and Build APK
+      - name: Install & Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build APK with System Gradle
         run: |
-          GRADLEW_PATH=$(find . -name gradlew | head -n 1)
-          if [ -z "$GRADLEW_PATH" ]; then
-            echo "File gradlew tidak ditemukan!"
-            exit 1
+          PROJECT_DIR=$(find . -name "build.gradle*" -exec dirname {} \; | head -n 1)
+          if [ -n "$PROJECT_DIR" ]; then
+            cd "$PROJECT_DIR"
+            gradle assembleDebug
+          else
+            gradle assembleDebug
           fi
-          PROJECT_DIR=$(dirname "$GRADLEW_PATH")
-          echo "Folder proyek ditemukan di: $PROJECT_DIR"
-          cd "$PROJECT_DIR"
-          chmod +x gradlew
-          ./gradlew assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
           path: '**/build/outputs/apk/debug/*.apk'
- 
