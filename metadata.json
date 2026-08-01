@@ -1,0 +1,6 @@
+{
+  "name": "Studyvo",
+  "description": "Aplikasi AI belajar pintar Studyvo Flash dan Studyvo Exercises dengan fitur ubah materi menjadi latihan soal dan rangkuman.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
